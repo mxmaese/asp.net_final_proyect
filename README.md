@@ -7,11 +7,11 @@
 - [Ideas Inconclusas](#ideas-inconclusas)
 
 ## Introducción
-Hola profe, este es mi intento de integrar addresses al proyecto base, este proyecto usa MySQL (más adelante podrá ver cómo instalarlo).
+Hola profe, este es mi intento de integrar addresses al proyecto base, este proyecto usa MySQL (más adelante te muestro cómo instalarlo).
 
-Lamentablemente no puedo hostearlo así que te doy todas las indicaciones para que lo puedas instalar y correr.
+Lamentablemente no puedo hostearlo, así que te doy todas las indicaciones para que lo puedas instalar y correrlo.
 
-Ante cualquier error contácteme.
+Ante cualquier error avisame.
 
 Muchas gracias, Maximiliano Maese.
 
@@ -19,7 +19,7 @@ Muchas gracias, Maximiliano Maese.
 Para instalar y ejecutar este proyecto, siga los siguientes pasos:
 1. Clone el repositorio con `git clone https://github.com/mxmaese/asp.net_final_project.git`.
 2. Ejecute `dotnet restore` en la carpeta final Project dentro del proyecto clonado para instalar las dependencias.
-3. [Aquí](https://github.com/mxmaese/asp.net_final_project/blob/main/Data%20base/test_final_project.sql) puede encontrar el SQL para importar la base de datos.
+3. [Aquí](https://github.com/mxmaese/asp.net_final_proyect/blob/main/Data%20base/test_final_proyect.sql) puede encontrar el SQL para importar la base de datos.
 4. Configure el Usuario, Contraseña, Base de datos y Host.
 5. Inicie la aplicación con `dotnet run`.
 
