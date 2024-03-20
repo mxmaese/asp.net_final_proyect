@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "qeUVSoVDidZ1jQpcfLzfBb6cv0wuDEbnPXbQahjcXimIB8TkPYL66rLmVjefgLdRyNRzri0cdHCoYQIbfRXRdg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\mxmae\\OneDrive\\Escritorio\\.net course\\final_proyect\\Utiles\\Utiles.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\mxmae\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\mxmae\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

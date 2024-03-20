@@ -1,0 +1,12 @@
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Utiles\bin\Debug\net8.0\Utiles.deps.json
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Utiles\bin\Debug\net8.0\Utiles.dll
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Utiles\bin\Debug\net8.0\Utiles.pdb
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Utiles\obj\Debug\net8.0\Utiles.csproj.AssemblyReference.cache
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Utiles\obj\Debug\net8.0\Utiles.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Utiles\obj\Debug\net8.0\Utiles.AssemblyInfoInputs.cache
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Utiles\obj\Debug\net8.0\Utiles.AssemblyInfo.cs
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Utiles\obj\Debug\net8.0\Utiles.csproj.CoreCompileInputs.cache
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Utiles\obj\Debug\net8.0\Utiles.dll
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Utiles\obj\Debug\net8.0\refint\Utiles.dll
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Utiles\obj\Debug\net8.0\Utiles.pdb
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Utiles\obj\Debug\net8.0\ref\Utiles.dll

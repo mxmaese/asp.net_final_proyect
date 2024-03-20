@@ -1,0 +1,44 @@
+/*
+  Agregamos algunos temas a partir de los colores nuevos que tenemos
+  algunos colores seran usados para generar temas (p ej bg-ptr...bg-libreria) y otros no
+  el nombre del tema puede no ser el mismo que el color (y no deberia serlo)
+
+  Tener en cuenta que cada tema genera botones, alertas, cards...etc y dependiendo tambien lo que
+  configuramos con y sin gradientes
+*/
+
+$primary3: $azul;
+$ptr: $ptr-color;
+$libreria: $libreriaptr-color;
+$octubre: $rosa;
+
+$da-primary: $azul-da;
+$da-danger: $bordo-da;
+
+$ptr-azul: $azul-ptr-new;
+$ptr-verde: $verde-ptr-new;
+$ptr-violeta: $violeta-ptr-new;
+
+$carmin: $rojo-carmin;
+$exotico: $turquesa-exotico;
+
+$wep: $tickle-me-pink;
+
+$theme-colors: map-merge( ( 
+  "primary3": $primary3, 
+  "ptr": $ptr, 
+  "libreria": $libreria, 
+  "octubre": $octubre,
+  //
+  "ptr-azul": $ptr-azul, 
+  "ptr-verde": $ptr-verde, 
+  "ptr-violeta": $ptr-violeta,
+  //
+  "da-primary": $da-primary, 
+  "da-danger": $da-danger,
+  //
+  "carmin": $carmin, 
+  "exotico": $exotico,
+  "wep": $wep
+), $theme-colors );
+

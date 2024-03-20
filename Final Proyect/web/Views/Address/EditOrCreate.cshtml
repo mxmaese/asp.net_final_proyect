@@ -1,0 +1,287 @@
+﻿@model EditorCreate
+@{
+    ViewData["Title"] = "Address";
+}
+
+@section script_links
+{
+    <script src="/lib/just-validate/dist/just-validate.production.min.js"
+            asp-append-version="true"></script>
+    <script src="/js/address/editorcreate.js" asp-append-version="true"></script>
+    <script src="/lib/js-sha256/build/sha256.min.js"></script>
+    <link href="~/css/register/index.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        .view-switch-checkbox {
+            display: none; /* Oculta el checkbox real */
+        }
+
+        .view-switch-label {
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            background-color: #ccc;
+            border-radius: 34px;
+            position: relative;
+            cursor: pointer;
+        }
+
+            .view-switch-label::after {
+                content: "";
+                position: absolute;
+                top: 2px;
+                left: 2px;
+                width: 30px;
+                height: 30px;
+                background-color: white;
+                border-radius: 50%;
+                transition: all 0.3s;
+            }
+
+        .view-switch-checkbox:checked + .view-switch-label::after {
+            transform: translateX(26px);
+        }
+
+        .input-error {
+            border: 2px solid #ff3860; 
+            background-color: #ffe5e5; 
+        }
+
+        .mensaje-error {
+            color: #ff3860; 
+            font-size: 0.875em; 
+            margin-top: 0.25rem; 
+            font-weight: 400; 
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+            .form-control:focus {
+                color: #495057;
+                background-color: #fff;
+                border-color: #80bdff;
+                outline: 0;
+                box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            }
+    </style>
+}
+
+<div class="row">
+
+    <div class="offset-1 col-10">
+
+        <div class="card m-4">
+            <h4 class="card-header text-black-50 bg-libreria text-center">Crear nueva direccion</h4>
+            <!--Form-->
+            <form id="frmUsuario" name="frmUsuario"
+                  asp-controller="Address" asp-action="EditOrCreate" method="post">
+                <div class="card-body">
+                    <!--Address-->
+                    <div class="row">
+
+                        <div class="col-4">
+                            <input asp-for="longitude" type="hidden" id="longitude" class="form-control">
+                            <input asp-for="latitude" type="hidden" id="latitude" class="form-control">
+
+                            <input asp-for="type" type="hidden" id="type" class="form-control">
+                        </div>
+                        <div class="col-12 bg-info-subtle text-black bg-opacity-50">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h6 class="bg-info bg-opacity-50 my-2 p-1">Datos de Direccion</h6>
+                                    @if (Model.address != null)
+                                    {
+                                        if (Model.address.Id_address != 0)
+                                        {
+                                            <h5 style="display: flex; align-items: center; justify-content: center;">
+                                                <span style="margin-top: -5px;">Campos</span>
+                                            <div class="switch_button switch-container" style="display: inline;margin: 0px 15px;">
+                                                <input type="checkbox" id="viewSwitch" class="view-switch-checkbox">
+                                                <label for="viewSwitch" class="view-switch-label"></label>
+                                            </div>
+                                            <span style="margin-top: -5px;">Mapa</span>
+                                        </h5>
+                                        }
+                                    }
+                                    <div class="row Input_conteiner">
+                                        <div class="col-4">
+                                            <div class="mb-3">
+                                                <label asp-for="address.Country" class="form-label">País</label>
+                                                <input asp-for="address.Country" id="Country" class="form-control">
+                                                <span id="Country_O" class="text-danger mensaje-error"></span>
+                                                <span asp-validation-for="address.Country" id="" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="mb-3">
+                                                <label asp-for="address.State" class="form-label">Provincia</label>
+                                                <input asp-for="address.State" id="State" class="form-control">
+                                                <span id="State_O" class="text-danger mensaje-error"></span>
+                                                <span asp-validation-for="address.State" id="" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="mb-3">
+                                                <label asp-for="address.City" class="form-label">Ciudad</label>
+                                                <input asp-for="address.City" id="City" class="form-control">
+                                                <span id="City_O" class="text-danger mensaje-error"></span>
+                                                <span asp-validation-for="address.City" id="" class="text-danger"></span>
+                                            </div>
+                                        </div><div class="col-4">
+                                            <div class="mb-3">
+                                                <label asp-for="Street" class="form-label">Calle</label>
+                                                <input asp-for="Street" id="Street" class="form-control">
+                                                <span id="Street_O" class="text-danger mensaje-error"></span>
+                                                <span asp-validation-for="Street" id="" class="text-danger"></span>
+                                            </div>
+                                        </div><div class="col-4">
+                                            <div class="mb-3">
+                                                <label asp-for="Height" class="form-label">Altura</label>
+                                                <input asp-for="Height" id="Height" class="form-control">
+                                                <span id="Height_O" class="text-danger mensaje-error"></span>
+                                                <span asp-validation-for="Height" id="" class="text-danger"></span>
+                                            </div>
+                                        </div><div class="col-4">
+                                            <div class="mb-3">
+                                                <label asp-for="address.Zip_code" class="form-label">Codigo postal</label>
+                                                <input asp-for="address.Zip_code" id="Zip_code" class="form-control">
+                                                <span id="Zip_code_O" class="text-danger mensaje-error"></span>
+                                                <span asp-validation-for="address.Zip_code" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (Model.address != null)
+                                    {
+                                        if (Model.address.Id_address != 0)
+                                        {
+                                            <div class="Map_conteiner">
+                                                <div id="map" style="height: 400px;"></div>
+                                            </div>
+                                        }
+                                    }
+                                    <div class="row Optionals_inputs">
+                                        <div class="col-2">
+                                            <div class="mb-3">
+                                                <label asp-for="Floor" class="form-label">Piso</label>
+                                                <input asp-for="Floor" class="form-control">
+                                                <span asp-validation-for="Floor" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="mb-3">
+                                                <label asp-for="Departament" class="form-label">Departamento</label>
+                                                <input asp-for="Departament" class="form-control">
+                                                <span asp-validation-for="Departament" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="mb-3">
+                                                <label asp-for="address.Message" class="form-label">Mensaje para el vendedor</label>
+                                                <input asp-for="address.Message" class="form-control">
+                                                <span asp-validation-for="address.Message" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Buttons-->
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-2">
+                            <button class="btn btn-outline-danger w-100" type="reset">Cancelar</button>
+                        </div>
+                        <div class="offset-8 col-2">
+                            <button id="btnCrear" class="btn btn-primary w-100" type="submit">Crear</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <input type="hidden" name="hashedPass" id="hashedPass" />
+            </form>
+        </div>
+    </div>
+</div>
+@if (Model.address != null)
+{
+    if (Model.address.Id_address != 0)
+    {
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <script>
+            var map = L.map('map').setView([@Model.latitude, @Model.longitude], 4);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            var marker;
+
+
+        </script>
+        <div id="map" style="height: 400px;"></div>
+        <script>
+            document.getElementById('map').style.display = 'none';
+        function initMap() {
+            if (!window.map) {
+                window.myMap = L.map('tuMapa').setView([@Model.latitude, @Model.longitude], 10);
+                let map = L.map('map').setView([@Model.latitude, @Model.longitude], 10);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+            }
+        }
+        let isMapVisible = false;
+
+        document.getElementById('viewSwitch').addEventListener('click', function () {
+            isMapVisible = !isMapVisible;
+
+            $("#type").val(isMapVisible == true ? 1 : 0);
+            if (isMapVisible) {
+                document.getElementById('map').style.display = '';
+                document.querySelector('.Input_conteiner').style.display = 'none';
+                this.textContent = 'Mostrar Inputs'; 
+                initMap();
+            } else {
+                document.getElementById('map').style.display = 'none'; 
+                document.querySelector('.Input_conteiner').style.display = ''; 
+                this.textContent = 'Mostrar Mapa'; 
+            }
+        });
+
+        console.log("lat: " + @Model.latitude + ", lon: " + @Model.longitude)
+
+        map.on('click', function (e) {
+            var coord = e.latlng;
+            var lat = coord.lat;
+            var lng = coord.lng;
+
+            $("#latitude").val(lat);
+            $("#longitude").val(lng);
+
+            console.log("You clicked the map at latitude: " + lat + " and longitude: " + lng);
+            
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            
+            marker = L.marker([lat, lng]).addTo(map);
+        });</script>
+    }
+}

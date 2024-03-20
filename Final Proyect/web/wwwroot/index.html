@@ -1,0 +1,520 @@
+﻿<!DOCTYPE html>
+<html lang="es-ar">
+
+<head>
+  <meta charset="utf-8" />
+
+  <link href="/css/site.css" rel="stylesheet" />
+  <link href="/css/bootstrap-ptr.css" rel="stylesheet" />
+  <link href="/css/fa/v6/css/all.css" rel="stylesheet" />
+
+  <title>Maqueta para Pagina de Inicio</title>
+
+  <script src="/lib/jquery/jquery.js"></script>
+  <script src="/lib/popper.js/umd/popper.js"></script>
+  <script src="/lib/bootstrap/js/bootstrap.js"></script>
+
+  <script src="/dist/js/maqueta/maqueta.bundle.js"></script>
+
+  <style>
+    html, body {
+      height: 100%;
+      /*min-height: 100vh;*/
+      /*min-height: 100vh;*/
+    }
+
+    .contenido {
+      flex: 1 0 auto;
+    }
+
+    footer {
+      flex-shrink: unset;
+    }
+
+    .bd-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1071;
+    }
+
+    .titulo {
+      font-size: 1.8em;
+    }
+
+    .libptr-style {
+      background-color: lightgray;
+    }
+
+      .libptr-style.errorXX {
+        background-color: #9c324f !important;
+      }
+
+    .libptr-style1 {
+      background-color: #05284c;
+    }
+
+    footer div.libptr-style1 {
+      background-color: #05284c;
+    }
+
+    .dropdown .dropdown-menu a:hover {
+      background-color: #32679C;
+      color: #fdfcfa;
+    }
+
+    .dropdown-menu a.dropdown-item:hover {
+      background: unset;
+      background-color: #66a2de;
+    }
+
+    .navegable {
+      cursor: pointer;
+    }
+
+    .force-pointer {
+      cursor: pointer;
+    }
+
+    .toast {
+      /*max-height: 200px !important;*/
+    }
+
+    .toast-error {
+      background-color: #ffcccc;
+    }
+
+    .toast-info {
+      background-color: moccasin;
+    }
+
+    .toast-ok {
+      background-color: palegreen;
+    }
+
+    .separata {
+    }
+
+    .row.separata {
+      margin-bottom: 0;
+      margin-top: 1rem;
+    }
+
+    #txtSearch::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+    }
+
+    #txtSearch::placeholder {
+      font-size: 100% !important;
+    }
+
+    a.logotipo-img {
+      color: currentColor;
+    }
+
+      a.logotipo-img:hover {
+        text-decoration: none;
+        color: currentColor;
+      }
+
+    span.fa-stack {
+      width: 1.6rem;
+      height: 1em;
+      line-height: 1em;
+    }
+
+    .libptr-help .dropdown-menu {
+      margin-top: 0.7rem !important;
+    }
+
+    .dropdown-submenu {
+      position: relative;
+    }
+
+      .dropdown-submenu a::after {
+        position: absolute;
+        right: 6px;
+        top: 0.8em;
+        transform: rotate(-90deg);
+      }
+
+      .dropdown-submenu .dropdown-menu {
+        left: 100%;
+        top: 0;
+      }
+
+    .navbar {
+      --bs-navbar-padding-x: 0.5rem;
+      --bs-navbar-padding-y: 0;
+    }
+
+  </style>
+
+  <!--@RenderSection("style_page", false)-->
+
+
+  <script language="javascript" type="text/javascript">
+
+    $(document).ready(function ()
+    {
+      console.log("Desde Layout...");
+
+      //  agregado obligado para soportar los menu multi-level
+      //
+      $(".dropdown-menu a.dropdown-toggle")
+        .on("click", function (e)
+        {
+          if (!$(this).next().hasClass("show"))
+          {
+            $(this).parents(".dropdown-menu")
+              .first().find(".show")
+              .removeClass("show");
+          }
+          const subMenu = $(this).next(".dropdown-menu");
+          subMenu.toggleClass("show");
+
+          $(this).parents("li.nav-item.dropdown.show")
+            .on("hidden.bs.dropdown",
+              function(e) {
+                $(".dropdown-submenu .show")
+                  .removeClass("show");
+              });
+          return false;
+        });
+    });
+
+  </script>
+
+
+  <!--@RenderSection("script_page", false)-->
+
+
+</head>
+
+<body class="d-flex flex-column">
+
+  <!--    CONTENIDO    -->
+
+  <div class="contenido">
+
+    <nav class="navbar navbar-expand-lg bg-libreria bd-navbar">
+      <div class="container-fluid ps-1 pe-1" style="align-content: center;">
+
+        <!--    BRAND CON LOGOTIPO    -->
+
+        <div class="navbar-brand" style="font-size: 1rem;">
+          <div class="d-flex">
+            <a class="logotipo-libptr-img ms-1 me-0 p-0" href="#" title="Ir al inicio de la aplicacion">
+              <img src="imagenes/Logo_Polo.png" width="48" />
+            </a>
+            <!--@await RenderSectionAsync("logotipo", true)-->
+            <!--    TEXTO ABREVIADO COLAPSA EN ANCHO NORMAL    -->
+
+            <div class="d-lg-none" title="Bienvenido a la web de LibreriaPTR...este no es el ancho de pantalla mas apropiado...">
+              <div style="display: flex; justify-content: center; flex-direction: column;">
+                <p class="logotipo-libptr-small">LIB</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!--    HAMBURGUESA SOLO PARA ANCHOS REDUCIDOS    -->
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#navbarContenido">
+          <span class="navbar-toggler-icon text-dark"></span>
+        </button>
+
+        <!--    AREA COLAPSABLE EN ANCHO REDUCIDO PERO VISIBLE EN HAMBURGUESA    -->
+
+        <div class="collapse navbar-collapse justify-content-between" id="navbarContenido">
+
+          <ul class="navbar-nav">
+
+            <!--    Menu Herramientas  ***  Solo visible para usuarios validos    -->
+
+            <li class="nav-item dropdown">
+              <a class="nav-link text-dark dropdown-toggle active" data-bs-toggle="dropdown"
+                 href="#">Herramientas<span class="sr-only-focusable">(current)</span></a>
+
+              <div class="dropdown-menu" style="min-width: 260px;">
+                <h2 class="dropdown-header"
+                    style="font-size: 1.03em; font-weight: bold;">
+                  Opciones Principales
+                </h2>
+
+                <a class="dropdown-item" href="#"
+                   target="_self">
+                  <i class="fa-brands fa-fw fa-space-awesome"
+                     style="color: crimson">
+                  </i>&nbsp;&nbsp;Administrar Usuarios
+                </a>
+
+                <a class="dropdown-item" href="#" target="_self">
+                  <i class="fa-brands fa-fw fa-space-awesome"
+                     style="color: #00ff00;">
+                  </i>&nbsp;&nbsp;Editar Stock
+                </a>
+
+                <a class="dropdown-item" href="#" target="_self">
+                  <i class="fa-brands fa-fw fa-space-awesome"
+                     style="color: lightcoral">
+                  </i>&nbsp;&nbsp;Opcion #3
+                </a>
+
+                <a class="dropdown-item" href="#" target="_self">
+                  <i class="fa-brands fa-fw fa-space-awesome"
+                     style="color: #8000ff;">
+                  </i>&nbsp;&nbsp;Opcion # 4
+                </a>
+
+                <a class="dropdown-item" href="#" target="_self">
+                  <i class="fa-brands fa-fw fa-space-awesome"
+                     style="color: rgb(24, 100, 171);">
+                  </i>&nbsp;&nbsp;Opcion #5
+                </a>
+
+                <a class="dropdown-item" href="#" target="_self">
+                  <i class="fa-brands fa-fw fa-space-awesome"
+                     style="color: rgb(255, 199, 43);">
+                  </i>&nbsp;&nbsp;Opcion #6
+                </a>
+
+                <a class="dropdown-item" href="#" target="_self">
+                  <i class="fa-brands fa-fw fa-space-awesome"
+                     style="color: rgb(91, 192, 235);">
+                  </i>&nbsp;&nbsp;Opcion #7
+                </a>
+
+                <div class="dropdown-submenu">
+
+                  <a class="dropdown-item dropdown-toggle">
+                    &nbsp;&nbsp;Opcion #8...
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a class="dropdown-item" href="#"
+                         style="position: relative"
+                         target="_self">
+                        <i class="fa-solid fa-fw fa-code-pull-request"
+                           style="color: rgb(255, 128, 64);">
+                        </i>&nbsp;&nbsp;Sub-opcion #1
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#"
+                         style="position: relative"
+                         target="_self">
+                        <i class="fa-solid fa-fw fa-code-compare"
+                           style="color: rgb(240, 62, 61);">
+                        </i>&nbsp;&nbsp;Sub-opcion #1
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+
+            <!--  Espacio reservado para que cada sector renderice su propio menu  -->
+
+            <!--@RenderSection("menu_sector", false)-->
+
+          </ul>
+
+          <!--  BARRA DE BUSQUEDA GLOBAL   -->
+
+          <div class="ms-auto">
+            <div id="searchApp" style="width: 100%;">
+
+              <div class="input-group item-ptr-violeta">
+                <input id="txtSearch"
+                       class="form-control item-ptr-violeta reset-default"
+                       placeholder="Buscar en el sitio [Ctrl+K]" />
+                <span class="input-group-text item-ptr-violeta" style="opacity: 0.7;">
+                  <i class="fa-solid fa-fw fa-magnifying-glass text-white-50"></i>
+                </span>
+              </div>
+
+            </div>
+          </div>
+
+          <!--  Iconos a la derecha  -->
+          <!--  BACK  -->
+          <!--@RenderSection("back_button", false)-->
+          <!--  AYUDAS  -->
+
+          <ul class="libptr-help navbar-nav ms-2"
+              title="Informacion del sitio, ayuda de como utilizarlo, glosarios, bitacora de cambios">
+            <li class="nav-item dropdown">
+              <a class="text-secondary" href="#" data-bs-toggle="dropdown" style="font-size: 2rem;">
+                <i class="fa-solid fa-circle-info" style="color: #008040;"></i>
+
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+
+                <a id="verBitacora" class="dropdown-item force-pointer" target="_self">
+                  <i class="fa-solid fa-fw fa-clock"
+                     style="color: rgb(218, 41, 28); font-size: 1rem;">
+                  </i>&nbsp;&nbsp;Mostrar historico de cambios
+                </a>
+
+                <a class="dropdown-item force-pointer" target="_self"
+                   asp-area="App" asp-controller="WebHelp" asp-action="Inicio">
+                  <i class="fa-solid fa-fw fa-hands-helping" 
+                     style="color: lightcoral; font-size: 1rem;">
+                  </i>&nbsp;&nbsp;Ayudas para utilizar nuestra web
+                </a>
+
+              </div>
+            </li>
+          </ul>
+
+          <!--  HOME  -->
+
+          <ul class="navbar-nav ms-2 me-2" title="Ir al inicio">
+            <li>
+              <a href="#" asp-area="" asp-controller="Home" asp-action="Inicio" class="text-secondary">
+                <span class="fa-solid fa-landmark-dome fa-2x" style="color: chocolate;"></span>
+              </a>
+
+            </li>
+          </ul>
+
+          <!--  NOTIFICACIONES  -->
+
+          <ul class="d-none navbar-nav ms-2" title="Notificaciones">
+            <li>
+              <a asp-area="" asp-controller="" asp-action="" class="text-secondary">
+                <span class="far fa-bell fa-2x"></span>
+              </a>
+            </li>
+          </ul>
+
+          <!--  Datos de usuario  -->
+          <!--@*
+  Hay una issue abierta en github por el problema de que no podemos usar el taghelper para los
+  view components:
+
+  ViewComponents called with the vc taghelper are broken on 7.0.3
+  https://github.com/dotnet/razor/issues/8281
+  *@-->
+
+          <ul id="userInfoComp" class="navbar-nav user-info-comp">
+            <!--@await Component.InvokeAsync(nameof(InformacionUsuario))-->
+
+            <li class="dropdown">
+              <a id="userInfoNav" class="user-info-mini-foto dropdown-toggle text-secondary"
+                 data-bs-toggle="dropdown" 
+                 style="padding-bottom: 10px; padding-top: 10px; cursor: pointer;"
+                 title="Usuario">
+                <img width="36" src="/imagenes/Doctora.png" alt="Usuario" class="rounded-circle" />
+              </a>
+
+              <ul class="dropdown-menu dropdown-menu-end" style="background-color: goldenrod;">
+                <li>
+                  <div class="user-info" style="width: 300px; background-color: burlywood;">
+                    <div class="user-info-foto">
+                      <img width="100" src="/imagenes/Doctora.png" alt="Usuario" class="rounded-circle" />
+                    </div>
+                    <div class="user-info-resto">
+                      <div class="user-info-nombre">Johanes Burgos</div>
+                      <div class="user-info-sector">Area 51</div>
+                    </div>
+                  </div>
+                </li>
+                <li class="dropdown-divider"></li>
+                <li>
+                  <div class="d-flex" style="align-items: end;">
+                    <div class="flex-column d-flex" style="width: 90%;">
+                      <a class="text-dark user-info-link" 
+                         asp-area="Admin" asp-controller="Main" asp-action="Inicio">
+                        Opciones de Administracion
+                      </a>
+                      <a class="text-dark user-info-link" target="_blank" href="#">
+                        Tareas en Background
+                      </a>
+                      <a class="text-dark user-info-link" 
+                         asp-area="Security" asp-controller="User" asp-action="Config" asp-route-legajo="@Model.Usuario.ID">
+                        Modificar Perfil
+                      </a>
+                    </div>
+                    <div class="flex-column">
+                      <a class="restart" href="#">
+                        <span class="fa-solid fa-recycle fa-2x float-end me-2"
+                              style="color: green;"
+                              title="Reinicia la sesion renovando los datos del usuario"></span>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+          <!--  Plugin de fecha y... hora?  -->
+
+        </div>
+
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+
+      <!--@RenderBody()-->
+      
+      <div class="bs-callout bs-callout-exotico">
+        <h4 class="callout-header">Mensaje al usuario</h4>
+        <div class="callout-body">
+          Pronto tendremos algo aca...
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!--    FOOTER    -->
+
+  <footer class="mt-4 bg-carmin">
+    <div class="container-fluid d-none">
+      <div class="row">
+        <div class="offset-1 col-5">
+          <span>Si queremos extender el footer...</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="offset-1 col-5">
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid bg-ptr-violeta">
+      <div class="row p-3">
+        <div class="col-5 text-white-50">
+          <span class="d-block">Libreria PTR</span>
+          <span class="d-block">Curso Aplicaciones Web | PTR</span>
+        </div>
+        <div class="col-5 text-white-50">
+          <span class="d-block">Version: @info.Version</span>
+
+          <span>info.Nombre</span>
+          <span>($"{info.Fecha:dd/MM/yyyy HH:mm}")</span>
+          <span>info.PID</span>
+
+        </div>
+        <div class="col-2">
+
+          <email mail-tipo="Info" mail-clases="text-white-50 float-right" mail-estilo="Link"
+                 mail-asunto="Contacto desde ..."></email>
+
+          <span class="d-none">
+            <i class="fa-solid fa-question-circle fa-1x d-inline-block p-2"></i>Quiénes Somos?
+          </span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!--@RenderSection("widgets", false)-->
+
+</body>
+</html>

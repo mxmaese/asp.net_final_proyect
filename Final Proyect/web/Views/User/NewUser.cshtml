@@ -1,0 +1,265 @@
+﻿@model web.Controllers.NewUserViewModel
+@{
+    ViewData["Title"] = "Nuevo";
+}
+
+@section script_links
+{
+    <script src="/lib/just-validate/dist/just-validate.production.min.js"
+            asp-append-version="true"></script>
+    <script src="/lib/js-sha256/build/sha256.min.js"></script>
+    <link href="~/css/register/index.css" rel="stylesheet"/>
+}
+
+@section script_page
+{
+    <script>
+
+        $(document).ready(function () {
+            const validador = new JustValidate("#frmUsuario",
+                {
+                    errorFieldCssClass: ["is-invalid"],
+                    errorLabelCssClass: ["invalid-feedback"]
+                });
+
+            validador
+                .addField("#@Html.Id("Usuario.Name")",
+                    [{ rule: "required", errorMessage: "El nombre del usuario es obligatorio" }])
+
+                .addField("#@Html.IdFor(m => m.Usuario.Email)",
+                    [
+                        { rule: "required", errorMessage: "Debe ingresarse un correo electronico!!" },
+                        { rule: "email", errorMessage: "El correo electronico no tiene el formato correcto" }
+                    ])
+                .addField("#@Html.Id("Usuario.Login")",
+                    [{ rule: "required", errorMessage: "La identificacion del usuario para el ingreso es requerida" }])
+
+                .addField("#@Html.Id("passwd")",
+                    [{ rule: "required", errorMessage: "Se necesita una contraseña para ingresar!!" }])
+
+                    .addField("#passwd_bis",
+                    [
+                        { rule: "required", errorMessage: "Se necesita repetir la contraseña para validacion" },
+                        {
+                            validator: (value, ctx) => {
+                                const passPrevia = $("#passwd").val();
+
+                                return (passPrevia === value);
+                            },
+                            errorMessage: "Las contraseñas deben ser iguales, si no para que las hacemos repetir..."
+                        }
+                    ])
+
+                //Address
+
+            .addField("#@Html.Id("Country")",
+                    [{ rule: "required", errorMessage: "El pais es obligatorio" }])
+
+                    .addField("#@Html.Id("State")",
+                    [{ rule: "required", errorMessage: "La provincia es obligatoria" }])
+
+                    .addField("#@Html.Id("City")",
+                    [{ rule: "required", errorMessage: "La ciudad es obligatoria" }])
+
+            .addField("#@Html.Id("Street")",
+                    [{ rule: "required", errorMessage: "La calle es obligatoria" }])
+
+            .addField("#@Html.Id("Height")",
+                    [{ rule: "required", errorMessage: "La altura es obligatoria" }])
+
+            .addField("#@Html.Id("Zip_code")",
+                    [{ rule: "required", errorMessage: "El codigo postal es obligatorio" },
+                    {
+                        validator: (value, fields) => {
+                            const pattern = /^[A-Za-z][0-9]{4}$/;
+                            return pattern.test(value);
+                        },
+                        errorMessage: 'El formato del código postal no es válido. Debe tener este formato "LNNNN".',
+                    }
+                ])
+
+                //validation Functions
+
+                .onValidate(function () { console.log("validation"); })
+                .onSuccess(function (event) {
+                    console.log("succcess");
+                    const pwd = $("#passwd").val();
+                    $("#hashedPassword").val(sha256(pwd));;
+                    console.log($("#hashedPassword").val())
+                    console.log(sha256(pwd))
+
+                    event.currentTarget.submit();
+                });
+
+            $("#btnCancelar").on("click",
+                function (evnt) {
+                    validador.refresh();
+                    $("#btnAgregar").attr("disabled", "disabled");
+                    $("#btnQuitar").attr("disabled", "disabled");
+                });
+
+        });
+
+    </script>
+}
+
+<div class="row">
+
+    <div class="offset-1 col-10">
+
+        <div class="card m-4">
+            <h4 class="card-header text-black-50 bg-libreria text-center">Crear usuario nuevo</h4>
+            <!--Form-->
+            <form id="frmUsuario" name="frmUsuario"
+                  asp-controller="User" asp-action="NewUser" method="post">
+                <div class="card-body">
+
+                    <!--Main-->
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label asp-for="Usuario.Name" class="form-label">Nombre</label>
+                                <input asp-for="Usuario.Name" class="form-control">
+                                <span asp-validation-for="Usuario.Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label asp-for="Usuario.Login" class="form-label">Login</label>
+                                <input asp-for="Usuario.Login" class="form-control">
+                                <span asp-validation-for="Usuario.Login" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label asp-for="Usuario.Email" class="form-label">Correo</label>
+                                <input asp-for="Usuario.Email" class="form-control">
+                                <span asp-validation-for="Usuario.Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label asp-for="Usuario.Birthday_Date" class="form-label">Cumpleaños</label>
+                                <input asp-for="Usuario.Birthday_Date" type="text" class="form-control" value="">
+                                <span asp-validation-for="Usuario.Birthday_Date" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label asp-for="Usuario.Pass" class="form-label">Password</label>
+                                <input type="password" id="passwd" class="form-control">
+                                <input asp-for="Usuario.Pass" type="hidden" class="form-control" id="hashedPassword" value="">
+                                <span asp-validation-for="Usuario.Pass" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="passwd_bis" class="form-label">Repetir Password</label>
+                                <input type="password" id="passwd_bis" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Address-->
+                    <div class="row">
+                        <div class="col-12 bg-info-subtle text-black bg-opacity-50">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h6 class="bg-info bg-opacity-50 my-2 p-1">Datos de Direccion</h6>
+
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="mb-3">
+                                                <label asp-for="Address.Country" class="form-label">País</label>
+                                                <input asp-for="Address.Country" id="Country" class="form-control">
+                                                <span asp-validation-for="Address.Country" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="mb-3">
+                                                <label asp-for="Address.State" class="form-label">Provincia</label>
+                                                <input asp-for="Address.State" id="State" class="form-control">
+                                                <span asp-validation-for="Address.State" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="mb-3">
+                                                <label asp-for="Address.City" class="form-label">Ciudad</label>
+                                                <input asp-for="Address.City" id="City" class="form-control">
+                                                <span asp-validation-for="Address.City" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="mb-3">
+                                                <label asp-for="Street" class="form-label">Calle</label>
+                                                <input asp-for="Street" id="Street" class="form-control">
+                                                <span asp-validation-for="Street" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="mb-3">
+                                                <label asp-for="Height" class="form-label">Altura</label>
+                                                <input asp-for="Height" id="Height" class="form-control">
+                                                <span asp-validation-for="Height" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="mb-3">
+                                                <label asp-for="Address.Zip_code" class="form-label">Codigo postal</label>
+                                                <input asp-for="Address.Zip_code" id="Zip_code" class="form-control">
+                                                <span asp-validation-for="Address.Zip_code" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="mb-3">
+                                                <label asp-for="Floor" class="form-label">Piso</label>
+                                                <input asp-for="Floor" id="Floor" class="form-control">
+                                                <span asp-validation-for="Floor" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="mb-3">
+                                                <label asp-for="Departament" class="form-label">Departamento</label>
+                                                <input asp-for="Departament" id="Departament" class="form-control">
+                                                <span asp-validation-for="Departament" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="mb-3">
+                                                <label asp-for="Address.Message" class="form-label">Mensaje para el vendedor</label>
+                                                <input asp-for="Address.Message" id="Message" class="form-control">
+                                                <span asp-validation-for="Address.Message" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Buttons-->
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-2">
+                            <button class="btn btn-outline-danger w-100" type="reset">Cancelar</button>
+                        </div>
+                        <div class="offset-8 col-2">
+                            <button id="btnCrear" class="btn btn-primary w-100" type="submit">Crear</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+
+

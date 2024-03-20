@@ -1,0 +1,97 @@
+@use "sass:color";
+@use "sass:math";
+@use "sass:map";
+
+@import "mixins/banner";
+@include bsBanner("Bienvenido al curso de aplicaciones WEB");
+
+$enable-shadows: true;
+$enable-gradients: true;
+
+// scss-docs-start import-stack
+// Configuration
+//  @import "../../node_modules/functions";
+@import "functions";
+
+@import "funciones";
+
+//  agrego en el mapa de colores los colores propios basicos, sin variantes ni rangos
+//
+@import "colores_basicos";
+
+@import "variables";
+@import "variables-dark";
+
+//  en variables armo los maps de theme-colors y colors
+//  o sea que en este punto puedo agregar mas colores de temas y tambien los colores de MIS temas y
+//  rangos de colores para los temas
+
+@import "themes";
+
+@import "maps";
+@import "mixins";
+@import "utilities";
+
+//  generar rangos de colores para $colors y $theme-colors
+//  generar las diferentes opacidades para $colors y $theme-colors
+
+$rango-colores: ();
+$opacidades-colores: ();
+
+@import "colores_rangos";
+@import "colores_opacidades";
+
+//  mergear todos los maps en $colors
+
+$colors: map.merge($colors, $rango-colores);
+$colors: map.merge($colors, $opacidades-colores);
+
+// Layout & components
+@import "root";
+
+@import "callouts";
+@import "paneles";
+
+@import "reboot";
+@import "type";
+@import "images";
+@import "containers";
+@import "grid";
+@import "tables";
+@import "forms";
+@import "buttons";
+@import "transitions";
+@import "dropdown";
+@import "button-group";
+@import "nav";
+@import "navbar";
+@import "card";
+@import "accordion";
+@import "breadcrumb";
+@import "pagination";
+@import "badge";
+@import "alert";
+@import "progress";
+@import "list-group";
+@import "close";
+@import "toasts";
+@import "modal";
+@import "tooltip";
+@import "popover";
+@import "carousel";
+@import "spinners";
+@import "offcanvas";
+@import "placeholders";
+
+@import "_forms_agregados";
+
+// Helpers
+@import "helpers";
+
+// Utilities
+@import "utilities/api";
+// scss-docs-end import-stack
+
+:root {
+  --input-border-color: #{$input-border-color};
+}

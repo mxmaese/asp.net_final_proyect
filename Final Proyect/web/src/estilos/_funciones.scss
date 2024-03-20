@@ -1,0 +1,65 @@
+@use "sass:color";
+@use "sass:math";
+@use "sass:map";
+
+@function porcentaje($porc) {
+  @return math.div($porc, 100%);
+}
+
+/*
+  $base-colors  Un map que contiene nombre de color y valor
+  $return       Un map con los colores light, dark y mid de cada color inicial
+*/
+@function generar-rango-colores($base-colors) {
+  $result: () !default;
+
+  @each $color, $value in $base-colors {
+    //  @debug color.whiteness(lighten($value, 35%));
+
+    $color-claro: porcentaje(color.whiteness(lighten($value, 35%)));
+    $color-oscuro: porcentaje(color.blackness(darken($value, 35%)));
+
+    @if $color-claro >0.9 {
+      // si el light es muy light, dejamos el color original como light
+      $result: map.set($result, #{$color}-light, $value);
+    }
+    @else {
+      $result: map.set($result, #{$color}-light, lighten($value, 35%));
+    }
+
+    @if $color-oscuro >0.9 {
+      // si el dark es muy dark, dejamos el color original como dark
+      $result: map.set($result, #{$color}-dark, $value);
+    }
+    @else {
+      $result: map.set($result, #{$color}-dark, darken($value, 35%));
+    }
+
+    $final1: map.get($map: $result, $key: #{$color}-dark);
+    $final2: map.get($map: $result, $key: #{$color}-light);
+
+    //@debug  map.get($map: $nuevos, $key: #{$color}-dark);
+    //@debug $nuevos;
+    //@debug color.mix(#00254d, $final2, 50%);
+
+    //  $mezcla: mix($final1,$final2,50%);
+
+    $result: map.set($result, #{$color}-mid, mix($final2, $final1, 50%));
+  }
+
+  ;
+  @return $result;
+}
+
+@function generar-transparencias-colores($base-colors) {
+  $transparencias: ("10": 0.1, "20": 0.2, "30": 0.3, "40": 0.4, "50": 0.5, "60": 0.6, "70": 0.7, "80": 0.8, "90": 0.9);
+  $result: ();
+
+  @each $color, $value in $base-colors {
+    @each $clave, $valor in $transparencias {
+      $result: map.set($result, #{$color}-#{$clave}, rgba($value, $valor));
+    }
+  }
+
+  @return $result;
+}

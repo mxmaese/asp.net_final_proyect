@@ -1,0 +1,15 @@
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Infraestructura\bin\Debug\net8.0\Infraestructura.deps.json
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Infraestructura\bin\Debug\net8.0\Infraestructura.dll
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Infraestructura\bin\Debug\net8.0\Infraestructura.pdb
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Infraestructura\bin\Debug\net8.0\Entidades.dll
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Infraestructura\bin\Debug\net8.0\Entidades.pdb
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Infraestructura\obj\Debug\net8.0\Infraestructura.csproj.AssemblyReference.cache
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Infraestructura\obj\Debug\net8.0\Infraestructura.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Infraestructura\obj\Debug\net8.0\Infraestructura.AssemblyInfoInputs.cache
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Infraestructura\obj\Debug\net8.0\Infraestructura.AssemblyInfo.cs
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Infraestructura\obj\Debug\net8.0\Infraestructura.csproj.CoreCompileInputs.cache
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Infraestructura\obj\Debug\net8.0\Infraestructura.csproj.CopyComplete
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Infraestructura\obj\Debug\net8.0\Infraestructura.dll
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Infraestructura\obj\Debug\net8.0\refint\Infraestructura.dll
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Infraestructura\obj\Debug\net8.0\Infraestructura.pdb
+C:\Users\mxmae\OneDrive\Escritorio\.net course\final_proyect\Infraestructura\obj\Debug\net8.0\ref\Infraestructura.dll

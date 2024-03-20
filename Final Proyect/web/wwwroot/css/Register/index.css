@@ -1,0 +1,19 @@
+﻿body {
+}
+.bg-info {
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--bs-info-rgb), var(--bs-bg-opacity)) !important;
+    border-radius: 50px;
+    text-align: center;
+    width: 100%;
+}
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    width: 100% !important;
+}
+.bg-info-subtle {
+    background-color: var(--bs-info-bg-subtle) !important;
+    border-radius: 20px;
+}

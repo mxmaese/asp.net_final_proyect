@@ -1,0 +1,1 @@
+{"version":3,"file":"js/maqueta/maqueta.bundle.js","mappings":";;;;;AACAA,OAAO,CAACC,GAAG,CAAC,YAAY,CAAC,C","sources":["webpack://web/./src/maquetas/app.js"],"sourcesContent":["\r\nconsole.log(\"Maqueta...\");"],"names":["console","log"],"sourceRoot":""}

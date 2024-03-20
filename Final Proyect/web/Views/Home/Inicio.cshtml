@@ -1,0 +1,32 @@
+﻿@using Servicios
+@using Servicios.Modelos
+@model IEnumerable<Servicios.Modelos.LibroDTO>
+@inject HelloService Hello
+
+@{
+  ViewData["Title"] = "Mostrar lista de libros";
+  var modelo = ViewBag.Lista as IEnumerable<LibroDTO>;
+}
+
+@section style_page {
+
+  <style>
+    .color-rojo {
+      color: var(--bs-carmin);
+    }
+  </style>
+}
+
+
+<div class="text-center">
+  <h1 class="display-4">@Hello.GetMensaje()</h1>
+</div>
+
+@if (modelo is not null)
+{
+  foreach (var libro in modelo)
+  {
+    <h3 class="color-rojo">Titulo: @libro.Titulo</h3>
+  }
+}
+

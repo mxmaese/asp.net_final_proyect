@@ -1,0 +1,92 @@
+﻿@{
+  ViewData["Title"] = "Ingresar Usuario";
+}
+
+@section script_links
+{
+  <script src="/lib/just-validate/dist/just-validate.production.min.js"></script>
+  <script src="/lib/js-sha256/build/sha256.min.js"></script>
+}
+
+@section script_page
+{
+  <script>
+    $(document).ready(function ()
+    {
+      console.log("Desde login...");
+
+      const validador = new JustValidate("#frmLogin",
+        {
+          errorFieldCssClass: [ "is-invalid" ],
+          errorLabelCssClass: [ "invalid-feedback" ]
+        });
+
+      validador
+        .addField("#login",
+          [ { rule: "required", errorMessage: "La identificacion del usuario para el ingreso es requerida" } ])
+        .addField("#passwd",
+          [ { rule: "required", errorMessage: "Se necesita una contraseña para ingresar!!" } ])
+        .onValidate(function ()
+        {
+
+        })
+        .onSuccess(function (event)
+        {
+          const pwd = $("#passwd").val();
+          $("#hashedPass").val(sha256(pwd));
+          event.currentTarget.submit();
+        });
+    });
+
+  </script>
+}
+
+<div class="row">
+
+  <div class="offset-4 col-4">
+
+    <div class="card m-4">
+      <h4 class="card-header text-black-50 bg-exotico text-center">Acceso</h4>
+
+      <form id="frmLogin" name="frmLogin"
+            asp-controller="Login" asp-action="Inicio" method="post">
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="mb-3">
+                <label for="login" class="form-label">Login</label>
+                <input id="login" autofocus="autofocus" name="login" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="mb-3">
+                <label for="passwd" class="form-label">Password</label>
+                <input type="password" id="passwd" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-2 d-none">
+              <button id="btnCancelar" class="btn btn-outline-danger w-100" type="button">Cancelar</button>
+            </div>
+            <div class="offset-8 col-4">
+              <button id="btnIngresar" class="btn btn-primary w-100" type="submit">Login!</button>
+            </div>
+          </div>
+
+        </div>
+
+        <input type="hidden" name="hashedPass" id="hashedPass" />
+      </form>
+    </div>
+  </div>
+
+</div>
+
+

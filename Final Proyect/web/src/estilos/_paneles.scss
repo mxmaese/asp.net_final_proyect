@@ -1,0 +1,66 @@
+.bs-panelmsg {
+  border-color: #eee;
+  border-image: none;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  border-style: solid;
+  border-width: 1px 1px 1px 10px;
+  margin: 0 20px;
+  padding: 5px;
+
+  & > .panelmsg-header {
+    margin-bottom: 5px;
+    margin-top: 0;
+  }
+
+  & > .panelmsg-body {
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    box-shadow: 3px 3px 7px var(--input-border-color);
+  }
+
+  & code {
+    border-radius: 3px;
+  }
+}
+
+/*
+  Ahora generamos las clases especificas para cada tema...
+*/
+
+@each $nombre, $valor in $theme-colors {
+  @debug $nombre;
+
+  //  @debug $colors;
+
+  //  vemos si el color light es igual al color inicial
+  $colorSuave: map-get($colors, #{$nombre}-light);
+  $colorBorde: $valor;
+
+  @debug "suave antes", $colorSuave;
+  @debug "borde antes", $colorBorde;
+
+  @if $colorSuave == $valor {
+    $colorSuave: $valor;
+    $colorBorde: map-get($colors, #{$nombre}-dark);
+  }
+
+  @debug "suave despues", $colorSuave;
+  @debug "borde despues", $colorBorde;
+
+  .bs-panelmsg-#{$nombre} {
+    border-left-color: $colorBorde;
+    background-color: $colorSuave;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--#{$prefix}#{$nombre}-dark);
+
+    & .callout-header {
+      color: theme-color-level($nombre, 3);
+      //  otra alternativa es usar el color de tema dark generado por mi modulo themes.scss
+      //  color: var(--warning-dark);
+    }
+  }
+}

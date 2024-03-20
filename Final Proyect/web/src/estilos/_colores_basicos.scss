@@ -1,0 +1,60 @@
+@use "sass:color";
+@use "sass:math";
+@use "sass:map";
+
+//  $azul: #337ab7;
+//  $azul: #093255;
+
+//  colores robados y otros...
+
+$azul: #275e8d;
+$ptr-color: lightgray;
+$libreriaptr-color: #b3d7ff;
+$rosa: #b52c5e;
+$tickle-me-pink: #f48fb1;
+$blush: #dd608c;
+$maroon-X11: #B52C5E;
+$dogwood-rose: #C53066;
+
+$bordo-da: #9c324f;
+$azul-da: #32679C;
+//
+//  nuevos colores Polo Tecnologico
+//
+$violeta-ptr-new: rgb(61, 0, 161); //  #3D00A1   Trypan Blue
+$verde-ptr-new: rgb(32, 210, 163); //  #20D2A3   Caribbean Green
+$azul-ptr-new: rgb(0, 174, 230); //  #00AEE6   Cyan Process
+//
+//  color para satisfacer a sandra
+//
+$rojo-carmin: rgb(237, 48, 65); //  #ED3041
+$turquesa-exotico: rgb(0, 164, 189); //  #00A4BD
+
+//  definicion global de colores para BS
+//  estos colores seran luego variables globales en :root
+
+$colors: ( 
+  "azul": $azul, 
+  "ptr-color": $ptr-color, 
+  "libreriaptr-color": $libreriaptr-color, 
+  "rosa": $rosa, 
+  "tickle-me-pink": $tickle-me-pink, 
+  "blush": $blush, 
+  "maroon-x11": $maroon-X11, 
+  "dogwood-rose": $dogwood-rose,
+  //
+  "bordo-da": $bordo-da, 
+  "azul-da": $azul-da,
+  //
+  "violeta-ptr-new": $violeta-ptr-new, 
+  "verde-ptr-new": $verde-ptr-new, 
+  "azul-ptr-new": $azul-ptr-new, 
+  "rojo-carmin": $rojo-carmin, 
+  "turquesa-exotico": $turquesa-exotico 
+);
+
+// :root {
+//   @each $color, $value in $colors {
+//     --#{$color}: #{$value};
+//   };
+// }

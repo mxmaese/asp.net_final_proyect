@@ -1,0 +1,51 @@
+﻿@model Entidades.Seguridad.Usuario
+
+<li class="dropdown">
+    <a id="userInfoNav" class="user-info-mini-foto dropdown-toggle text-secondary"
+       data-bs-toggle="dropdown"
+       style="padding-bottom: 10px; padding-top: 10px; cursor: pointer;"
+       title="Usuario">
+        <img width="36" src="/imagenes/Persona.png" alt="Usuario" class="rounded-circle" />
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-end">
+        <li>
+            <div class="user-info" style="width: 300px; ">
+                <div class="user-info-foto">
+                    <img width="100" src="/imagenes/Persona.png" alt="Usuario" class="rounded-circle" />
+                </div>
+                <div class="user-info-resto">
+                    <div class="user-info-nombre">@Model.Name</div>
+                    @foreach (var actual in Model.Perfiles)
+                    {
+                        <div class="user-info-sector">@actual.Name</div>
+                    }
+                </div>
+            </div>
+        </li>
+        <li class="dropdown-divider"></li>
+        <li>
+            <div style="align-items: end;">
+                <div class="flex-column">
+                    <a class="restart" href="#">
+                        <span class="fa-solid fa-recycle fa-2x float-end me-2"
+                              style="color: green;"
+                              title="Reinicia la sesion renovando los datos del usuario"></span>
+                    </a>
+                </div>
+                <div class="flex-column" style="display: block !important;width: 100%;">
+                    <a class="text-dark user-info-link"
+                       asp-controller="Address" asp-action="Addresses">
+                        Administrar Direcciones
+                    </a>
+                </div>
+                <div class="flex-column" style="display: block !important;width: 100%;">
+                    <a class="text-dark user-info-link"
+                       asp-controller="Login" asp-action="Logout">
+                        Log Out
+                    </a>
+                </div>
+            </div>
+        </li>
+    </ul>
+</li>

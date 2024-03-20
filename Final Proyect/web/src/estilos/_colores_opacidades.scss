@@ -1,0 +1,8 @@
+//  todos los colores con valores de opacidad (menos el 1 que seria el color tal como esta)
+//  esto es para no afectar el color del texto, ya que opacity afecta a todo el elemento
+//
+
+$opacidades-colores: generar-transparencias-colores($colors);
+$nuevos: generar-transparencias-colores($theme-colors);
+
+$opacidades-colores: map-merge($opacidades-colores, $nuevos);

@@ -1,0 +1,53 @@
+﻿@using System.Text.Encodings.Web
+@model FullErrorViewModel
+@{
+  string subject = $"[ERROR]-{Model.Source}";
+
+  string body = $@"
+{Model.Comunicacion}
+                                 
+Al comunicarse informar al asesor este codigo: {Model.TraceIdentifier}
+                                 
+Gracias!
+";
+  string mailto = $"mailto:a23093000@gmail.com?body={UrlEncoder.Default.Encode(body)}&subject={UrlEncoder.Default.Encode(subject)}";
+}
+
+<div class="p-5 my-4 bg-primary bg-opacity-25 rounded-3">
+  <div class="container-fluid py-5">
+
+    <h1 class="display-4">
+      <span class="fa-1x">
+        <i class="fa-brands fa-space-awesome fa-fw fa-bounce"
+           style="color: var(--bs-violeta-ptr-new); "></i>
+        @Html.Raw(Model.Titulo)
+      </span>
+    </h1>
+
+    <p class="lead">
+      @Html.Raw(Model.Mensaje)
+    </p>
+
+    <hr class="my-4" />
+
+    <div>
+      @if (Model.Detalle != null)
+      {
+        @Html.Raw(Model.Detalle)
+      }
+    </div>
+
+    <p class="mt-3">
+      Presionando el boton que está al final de este texto, se abrirá tu cliente de correo con un texto prearmado.
+      Por favor verificá o completa los datos solicitados y cualquier otra aclaracion que consideres para que
+      podamos proceder con solucion del problema.
+    </p>
+    
+    <a class="btn btn-danger float-end"
+       href="@mailto">
+      <i class="fa-regular fa-envelope-open fa-1x d-inline-block pt-2 pe-2 pb-2"></i>Enviar Correo
+    </a>
+
+  </div>
+
+</div>

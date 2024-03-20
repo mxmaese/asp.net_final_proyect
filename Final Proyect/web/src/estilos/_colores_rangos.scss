@@ -1,0 +1,45 @@
+/*
+  Incorporamos los rangos de colores tanto para el map $colors como para $theme-colors
+  Los dejamos en $rango-colores
+*/
+
+// $nuevos: () !default;
+
+// @each $color, $value in $colors {
+//   //  @debug color.whiteness(lighten($value, 35%));
+
+//   $color-claro: porcentaje(color.whiteness(lighten($value, 35%)));
+//   $color-oscuro: porcentaje(color.blackness(darken($value, 35%)));
+
+//   @if $color-claro >0.9 {
+//     // si el light es muy light, dejamos el color original como light
+//     $nuevos: map.set($nuevos, #{$color}-light, $value);
+//   }
+//   @else {
+//     $nuevos: map.set($nuevos, #{$color}-light, lighten($value, 35%));
+//   }
+
+//   @if $color-oscuro >0.9 {
+//     // si el dark es muy dark, dejamos el color original como dark
+//     $nuevos: map.set($nuevos, #{$color}-dark, $value);
+//   }
+//   @else {
+//     $nuevos: map.set($nuevos, #{$color}-dark, darken($value, 35%));
+//   }
+
+//   $final1: map.get($map: $nuevos, $key: #{$color}-dark);
+//   $final2: map.get($map: $nuevos, $key: #{$color}-light);
+
+//   //@debug  map.get($map: $nuevos, $key: #{$color}-dark);
+//   //@debug $nuevos;
+//   //@debug color.mix(#00254d, $final2, 50%);
+
+//   //  $mezcla: mix($final1,$final2,50%);
+
+//   $nuevos: map.set($nuevos, #{$color}-mid, mix($final2, $final1, 50%));
+// };
+
+$rango-colores: generar-rango-colores($colors);
+$nuevos: generar-rango-colores($theme-colors);
+
+$rango-colores: map-merge($rango-colores, $nuevos);

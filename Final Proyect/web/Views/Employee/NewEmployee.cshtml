@@ -1,0 +1,256 @@
+﻿@model web.Controllers.NewEmployeeViewModel
+@{
+    ViewData["Title"] = "Nuevo";
+}
+
+@section script_links
+{
+    <script src="/lib/just-validate/dist/just-validate.production.min.js"
+            asp-append-version="true"></script>
+    <script src="/lib/js-sha256/build/sha256.min.js"></script>
+    <link href="~/css/register/index.css" rel="stylesheet"/>
+}
+
+@section script_page
+{
+    <script>
+
+        $(document).ready(function () {
+            const validador = new JustValidate("#frmUsuario",
+                {
+                    errorFieldCssClass: ["is-invalid"],
+                    errorLabelCssClass: ["invalid-feedback"]
+                });
+
+            const cbDisponibles = "#@Html.IdFor(m => m.PerfilesDisponibles)";
+            const cbAsignados = "#@Html.IdFor(m => m.PerfilesAsignados)";
+            
+            $("#btnAgregar").attr("disabled", "disabled");
+            $("#btnQuitar").attr("disabled", "disabled");
+
+            $(cbAsignados).on("change",
+                function (evt) {
+                    const elem = $(this);
+                    const disponibles = elem.children("option:selected").length;
+
+                    console.log(elem);
+
+                    if (disponibles > 0)
+                        $("#btnQuitar").removeAttr("disabled");
+                    else
+                        $("#btnQuitar").attr("disabled", "disabled");
+                });
+
+            $(cbDisponibles).on("change",
+                function (evt) {
+                    const elem = $(this);
+                    const seleccionados = elem.children("option:selected").length;
+
+                    console.log(elem);
+
+                    if (seleccionados > 0)
+                        $("#btnAgregar").removeAttr("disabled");
+                    else
+                        $("#btnAgregar").attr("disabled", "disabled");
+                });
+
+            $("#btnAgregar").click(function (evt) {
+                const seleccionados = $(`${cbDisponibles} option:selected`);
+
+                seleccionados.each(function () {
+                    $(this).detach();
+                    $(this).appendTo(cbAsignados);
+                });
+                $(cbDisponibles).trigger("change");
+                $(cbAsignados).trigger("change");
+                validador.revalidateField(cbAsignados);
+            });
+
+            $("#btnQuitar").click(function (evt) {
+                const seleccionados = $(`${cbAsignados} option:selected`);
+
+                seleccionados.each(function () {
+                    $(this).detach();
+                    $(this).appendTo(cbDisponibles);
+                });
+                $(cbDisponibles).trigger("change");
+                $(cbAsignados).trigger("change");
+            });
+
+
+            validador
+                .addField("#@Html.Id("Usuario.Name")",
+                    [{ rule: "required", errorMessage: "El nombre del usuario es obligatorio" }])
+
+                .addField("#@Html.IdFor(m => m.Usuario.Email)",
+                    [
+                        { rule: "required", errorMessage: "Debe ingresarse un correo electronico!!" },
+                        { rule: "email", errorMessage: "El correo electronico no tiene el formato correcto" }
+                    ])
+                .addField("#@Html.Id("Usuario.Login")",
+                    [{ rule: "required", errorMessage: "La identificacion del usuario para el ingreso es requerida" }])
+
+                .addField("#passwd",
+                    [{ rule: "required", errorMessage: "Se necesita una contraseña para ingresar!!" }])
+
+                .addField("#passwd_bis",
+                    [
+                        { rule: "required", errorMessage: "Se necesita repetir la contraseña para validacion" },
+                        {
+                            validator: (value, ctx) => {
+                                const passPrevia = $("#passwd").val();
+
+                                return (passPrevia === value);
+                            },
+                            errorMessage: "Las contraseñas deben ser iguales, si no para que las hacemos repetir..."
+                        }
+                    ])
+
+                .addField(cbAsignados,
+                    [{ rule: "required", errorMessage: "El usuario debe disponer al menos de un perfil" }])
+
+                .onValidate(function () { console.log("validation"); })
+                .onSuccess(function (event) {
+                    console.log("succcess");
+                    event.preventDefault();
+                    const perfilesAsignadosSelect = document.querySelector('#PerfilesAsignados');
+                    if (perfilesAsignadosSelect) {
+                        for (let i = 0; i < perfilesAsignadosSelect.options.length; i++) {
+                            perfilesAsignadosSelect.options[i].selected = true;
+                        }
+                    }
+
+                    console.log("success");
+                    const pwd = $("#passwd").val();
+
+                    $("#hashedPass").val(sha256(pwd));
+
+
+                    event.target.submit();
+                });
+
+            $("#btnCancelar").on("click",
+                function (evnt) {
+                    validador.refresh();
+                    $("#btnAgregar").attr("disabled", "disabled");
+                    $("#btnQuitar").attr("disabled", "disabled");
+                });
+
+        });
+
+    </script>
+}
+
+<div class="row">
+
+    <div class="offset-1 col-10">
+
+        <div class="card m-4">
+            <h4 class="card-header text-black-50 bg-libreria text-center">Crear nuevo Empleado</h4>
+            <!--Form-->
+            <form id="frmUsuario" name="frmUsuario"
+                  asp-controller="Employee" asp-action="NewEmployee" method="post">
+                <div class="card-body">
+
+                    <!--Main-->
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label asp-for="Usuario.Name" class="form-label">Nombre</label>
+                                <input asp-for="Usuario.Name" class="form-control">
+                                <span asp-validation-for="Usuario.Name"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label asp-for="Usuario.Login" class="form-label">Login</label>
+                                <input asp-for="Usuario.Login" class="form-control">
+                                <span asp-validation-for="Usuario.Login"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label asp-for="Usuario.Email" class="form-label">Correo</label>
+                                <input asp-for="Usuario.Email" class="form-control">
+                                <span asp-validation-for="Usuario.Email"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label asp-for="Usuario.Birthday_Date" class="form-label">Cumpleaños</label>
+                                <input asp-for="Usuario.Birthday_Date" type="text" class="form-control" value="">
+                                <span asp-validation-for="Usuario.Birthday_Date"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="passwd" class="form-label">Contraseña</label>
+                                <input type="password" class="form-control" id="passwd">
+
+                                <input type="hidden" asp-for="Usuario.Pass" id="hashedPass">
+                                <span asp-validation-for="Usuario.Pass" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="passwd_bis" class="form-label">Repetir Password</label>
+                                <input type="password" id="passwd_bis" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Profile-->
+                    <div class="row">
+                        <h6 class="text-center bg-info bg-opacity-50 my-2 p-1">Perfiles</h6>
+                        <div class="col-4">
+                            <span>Disponibles</span>
+                            <div class="mb-3">
+                                <label asp-for="PerfilesDisponibles" class="form-label">Disponibles</label>
+                                <select asp-items="Model.PerfilesDisponibles" asp-for="PerfilesDisponibles"
+                                        multiple="multiple" class="form-control">
+                                </select>
+                                <span asp-validation-for="PerfilesDisponibles" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-4 mt-3 d-flex flex-row justify-content-center">
+                            <div class="btn-group-vertical">
+                                <button type="button" id="btnAgregar" class="btn btn-da-primary flex-grow-0">Agregar &#128073;&#127996;</button>
+                                <button type="button" id="btnQuitar" class="btn btn-wep flex-grow-0">&#128072;&#127999; Quitar</button>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <span>Asignados</span>
+                            <div class="mb-3">
+                                <label asp-for="PerfilesAsignados" class="form-label">Asignados</label>
+                                <select asp-items="Model.PerfilesAsignados" asp-for="PerfilesAsignados"
+                                        multiple="multiple" class="form-control">
+                                </select>
+                                <span asp-validation-for="PerfilesAsignados" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Buttons-->
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-2">
+                            <button class="btn btn-outline-danger w-100" type="reset">Cancelar</button>
+                        </div>
+                        <div class="offset-8 col-2">
+                            <button id="btnCrear" class="btn btn-primary w-100" type="submit">Crear</button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+

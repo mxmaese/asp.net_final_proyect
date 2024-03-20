@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Entidades.Seguridad.Address>
+
+@{
+    ViewData["Title"] = "Lista de Direcciones";
+}
+@section Style_page
+{
+    <style>
+        .table_address {
+            border: 4px solid black;
+            text-align: center;
+        }
+        .th_table_address, .td_table_address {
+            border: 2px solid gray;
+        }
+    </style>
+}
+
+<h2>@ViewData["Title"]</h2>
+
+
+<a href="@Url.Action("EditOrCreate", "Address")" class="btn btn-success">Crear Nueva Dirección</a>
+
+<table class="table table_address" style="margin-top: 10px;">
+    <thead>
+        <tr>
+            <th class="th_table_address">Direccion</th>
+            <th class="th_table_address">Ciudad</th>
+            <th class="th_table_address">Código Postal</th>
+            <th class="th_table_address">Mensaje</th>
+            <th class="th_table_address">Piso-Departamento</th>
+            <th class="th_table_address">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var address in Model)
+        {
+            <tr>
+                <td class="td_table_address">@address.Line_1.Split(";")[0] @address.Line_1.Split(";")[1]</td>
+                <td class="td_table_address">@address.City, @address.State, @address.Country</td>
+                <td class="td_table_address">@address.Zip_code</td>
+                <td class="td_table_address">@(string.IsNullOrWhiteSpace(address.Message)?"Sin mensaje":address.Message)</td>
+                <td class="td_table_address">
+                    @{
+                        var partes = address.Line_2.Split(";");
+                        var piso = partes.Length > 0 && !string.IsNullOrWhiteSpace(partes[0]) ? partes[0] : "";
+                        var depto = partes.Length > 1 && !string.IsNullOrWhiteSpace(partes[1]) ? partes[1] : "";
+                        string PisoDepto;
+                        if (!string.IsNullOrEmpty(piso) && string.IsNullOrEmpty(depto))
+                        {
+                            PisoDepto = "Piso: " + piso;
+                        }
+                        else if (string.IsNullOrEmpty(piso) && !string.IsNullOrEmpty(depto))
+                        {
+                            PisoDepto = "Dept: " + depto;
+                        }
+                        else if (string.IsNullOrEmpty(piso) && string.IsNullOrEmpty(depto))
+                        {
+                            PisoDepto = "Sin informacion";
+                        }
+                        else
+                        {
+                            PisoDepto = piso + " - " + depto;
+                        }
+                    }
+                    @PisoDepto
+                </td>
+                <td class="td_table_address">
+                    <a href="@Url.Action("EditOrCreate", "Address", new { IdAddress = address.Id_address})" class="btn btn-primary">Editar</a>
+                    <a href="@Url.Action("AddressDelete", "Address", new { IdAddress = address.Id_address })" class="btn btn-primary">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
