@@ -6,7 +6,13 @@
 - [Adiciones](#adiciones)
 - [Ideas Inconclusas](#ideas-inconclusas)
 ## Introducción
-Hola profe, este es mi intengo de integrar addresses al proyecto base, este proyecto usa Mysql (mas adelante podra ver como instalarlo)
+Hola profe, este es mi intengo de integrar addresses al proyecto base, este proyecto usa Mysql (mas adelante podra ver como instalarlo).
+
+Lamentablemente no puede hostearlo asi que te doy todas las indicaciones para que lo puedas instalar y correr
+
+Ante cualquier error contacteme
+
+Muchas gracias, Maximiliano Maese
 
 ## Instalación
 Para instalar y ejecutar este proyecto, siga los siguientes pasos:
@@ -25,7 +31,7 @@ Para instalar y ejecutar este proyecto, siga los siguientes pasos:
 - **Dualidad para elejir la direccion:** Permite al usuario elejir entre ingresar los datos por medio de campos o por un mapa interactivo.
 - **Sistema de errores personalizado:** Al aparecer errores te muestra una pantalla personalizada.
 
-## Ideas_inconclusas
+## Ideas inconclusas
 - **Mejorar el sistema de errorres:** La idea era que aparezca arriba a la derecha una vista parcial que muestra el error mas bonito
 - **Error al loguearse:** Que cuando insertas mal la contraceña aparezca un error ahi y que no te lleve a otra vista no me muestra Ideas inconclusas en la tabla de contenidos y como hago un link a una parte del repositorio.
 - **Error al loguearse:** Que cuando insertas mal la contraceña aparezca un error ahi y que no te lleve a otra vista.
